@@ -1,30 +1,33 @@
 <template>
   <v-container fluid grid-list-sm>
     <v-layout row wrap>
-            <v-flex
-              v-for="n in 9"
-              :key="n"
-              xs4
-            >
-              <v-card flat tile>
+      <v-flex v-for="pokemon in pokemons" :key="pokemon.originalId">
+        <PokeCard :pokemon="pokemon"/>
+        <!-- <PokeCard v-for="pokemon in pokemons"
+            :key="pokemon.originalId"
+        :pokemon="pokemon"/>-->
+        <!-- <v-card flat tile>
                 <v-img
                   :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"
                   height="200px"
                 ></v-img>
-              </v-card>
-            </v-flex>
+        </v-card>-->
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 <script>
-import axios from 'axios'
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
+import PokeCard from "./PokeCard.vue";
 
 export default {
+  components: {
+    PokeCard
+  },
   data() {
     return {
       info: "",
-      pokemon: []
+      pokemons: []
     };
   },
   mounted() {
@@ -33,11 +36,23 @@ export default {
     //   .then(response => (this.info = response));
   },
   apollo: {
-    pokemons: gql`query {
-      pokemons {
-        name
+    pokemons: gql`
+      query {
+        pokemons {
+          originalId
+          name
+          weight
+          height
+          moves {
+            name
+            url
+          }
+          types {
+            name
+          }
+        }
       }
-    }`,
+    `
   }
 };
 </script>
