@@ -1,0 +1,7 @@
+mutation pokemonCreate($name: String!, $url: String!) {
+	createPokemon (name: $name, url: $url) {
+		id
+		name
+		url
+	}
+}

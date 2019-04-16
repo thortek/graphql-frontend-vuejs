@@ -1,14 +1,14 @@
 <template>
-  <v-card flat tile>
-    <v-img :src="`./assets/${pokemon.originalId}${pokemon.name}.png`" height="200px" width="200px"></v-img>
+  <v-card>
+    <v-img :src="`./assets/${pokemon.originalId}${pokemon.name}.png`" height="200px" width="200px" class="white--text"></v-img>
     <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">{{pokemon.name}}</h3>
+      <div class="data">
+        <h3 class="headline mb-0">{{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}}</h3>
         <ul>
-            <li>{{pokemon.moves[0].name}}</li>
-            <li>{{pokemon.moves[1].name}}</li>
-            <li>{{pokemon.moves[2].name}}</li>
-            <li>{{pokemon.moves[3].name}}</li>
+            <li>{{pokemon.moves[0].name.charAt(0).toUpperCase() + pokemon.moves[0].name.slice(1)}}</li>
+            <li>{{pokemon.moves[1].name.charAt(0).toUpperCase() + pokemon.moves[1].name.slice(1)}}</li>
+            <li>{{pokemon.moves[2].name.charAt(0).toUpperCase() + pokemon.moves[2].name.slice(1)}}</li>
+            <li>{{pokemon.moves[3].name.charAt(0).toUpperCase() + pokemon.moves[3].name.slice(1)}}</li>
         </ul>
       </div>
     </v-card-title>
@@ -25,3 +25,14 @@ export default {
   }
 };
 </script>
+<style scoped>
+.data {
+    margin: auto;
+    text-align: center;
+    background-color: #eee;
+}
+ul {
+  list-style-type: none;
+  padding: 10px;
+}
+</style>

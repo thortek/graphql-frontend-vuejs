@@ -14,11 +14,20 @@
         </v-card>-->
       </v-flex>
     </v-layout>
+
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-text-field id="name" v-model="name" label="Name" required></v-text-field>
+
+      <v-text-field id="url" v-model="url" label="URL" required></v-text-field>
+    </v-form>
+
+    <v-btn color="info" @click="createPokemon">Create New Pokemon</v-btn>
   </v-container>
 </template>
 <script>
-import gql from "graphql-tag";
-import PokeCard from "./PokeCard.vue";
+import gql from "graphql-tag"
+import PokeCard from "./PokeCard.vue"
+import POKEMON_CREATE from '../graphql/PokemonCreate.gql'
 
 export default {
   components: {
@@ -27,7 +36,10 @@ export default {
   data() {
     return {
       info: "",
-      pokemons: []
+      pokemons: [],
+      valid: true,
+      name: '',
+      url: '',
     };
   },
   mounted() {
@@ -53,8 +65,28 @@ export default {
         }
       }
     `
-  }
-};
+  },
+  methods: {
+    createPokemon () {
+      const name = this.name
+      const url = this.url
+				try {
+					this.$apollo.mutate({
+						mutation: POKEMON_CREATE,
+						variables: {
+              name,
+              url
+						},
+					 }).then((data) => {
+      // Result
+      console.log(data)
+    })
+    } catch (e) {
+					console.error(e)
+				}
+      }
+    }
+}
 </script>
-<style>
+<style scoped>
 </style>
