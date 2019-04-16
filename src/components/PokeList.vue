@@ -25,9 +25,9 @@
   </v-container>
 </template>
 <script>
-import gql from "graphql-tag"
-import PokeCard from "./PokeCard.vue"
-import POKEMON_CREATE from '../graphql/PokemonCreate.gql'
+import gql from "graphql-tag";
+import PokeCard from "./PokeCard.vue";
+import POKEMON_CREATE from "../graphql/PokemonCreate.gql";
 
 export default {
   components: {
@@ -38,8 +38,8 @@ export default {
       info: "",
       pokemons: [],
       valid: true,
-      name: '',
-      url: '',
+      name: "",
+      url: ""
     };
   },
   mounted() {
@@ -67,26 +67,35 @@ export default {
     `
   },
   methods: {
-    createPokemon () {
-      const name = this.name
-      const url = this.url
-				try {
-					this.$apollo.mutate({
-						mutation: POKEMON_CREATE,
-						variables: {
+    createPokemon() {
+      const name = this.name;
+      const url = this.url;
+      try {
+        this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation createPokemon($name: String, $url: String) {
+                createPokemon(data: { name: $name, url: $url }) {
+                  id
+                  name
+                  url
+                }
+              }
+            `,
+            variables: {
               name,
               url
-						},
-					 }).then((data) => {
-      // Result
-      console.log(data)
-    })
-    } catch (e) {
-					console.error(e)
-				}
+            }
+          })
+          .then(data => {
+            console.log(data);
+          });
+      } catch (e) {
+        console.error(e);
       }
     }
-}
+  }
+};
 </script>
 <style scoped>
 </style>
